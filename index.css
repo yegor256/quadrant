@@ -68,12 +68,15 @@ body {
   flex: 1;
   overflow-y: auto;
   padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 6px;
+  align-content: start;
 }
 .task {
   display: flex;
   align-items: flex-start;
   padding: 10px 12px;
-  margin-bottom: 6px;
   background: #f9fafb;
   border-radius: 6px;
   border: 1px solid #e5e7eb;
@@ -165,6 +168,9 @@ body {
   .header {
     padding: 10px 12px;
     font-size: 12px;
+  }
+  .tasks {
+    grid-template-columns: 1fr;
   }
   .task {
     padding: 8px 10px;
