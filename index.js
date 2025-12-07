@@ -21,7 +21,8 @@ $(function () {
       var list = $(this).find('.tasks');
       list.empty();
       data[index].forEach(function (text, i) {
-        var task = $('<div class="task"></div>');
+        var task = $('<div class="task" draggable="true"></div>');
+        task.data('quadrant', index).data('index', i);
         task.append($('<span class="task-text"></span>').text(text));
         var actions = $('<div class="task-actions"></div>');
         actions.append($('<button class="task-btn move">&#8644;</button>').data('quadrant', index).data('index', i));
@@ -35,6 +36,56 @@ $(function () {
   function closeMenu() {
     $('.menu').remove();
   }
+
+  var dragged = null;
+
+  $(document).on('dragstart', '.task', function (e) {
+    dragged = {
+      quadrant: $(this).data('quadrant'),
+      index: $(this).data('index')
+    };
+    $(this).addClass('dragging');
+    e.originalEvent.dataTransfer.effectAllowed = 'move';
+  });
+
+  $(document).on('dragend', '.task', function () {
+    $(this).removeClass('dragging');
+    $('.tasks').removeClass('drag-over');
+    dragged = null;
+  });
+
+  $(document).on('dragover', '.tasks', function (e) {
+    e.preventDefault();
+    e.originalEvent.dataTransfer.dropEffect = 'move';
+  });
+
+  $(document).on('dragenter', '.tasks', function () {
+    if (dragged) {
+      $(this).addClass('drag-over');
+    }
+  });
+
+  $(document).on('dragleave', '.tasks', function (e) {
+    if (!$(this).has(e.relatedTarget).length) {
+      $(this).removeClass('drag-over');
+    }
+  });
+
+  $(document).on('drop', '.tasks', function (e) {
+    e.preventDefault();
+    if (!dragged) {
+      return;
+    }
+    var target = $(this).closest('.quadrant').data('id');
+    if (target !== dragged.quadrant) {
+      var task = data[dragged.quadrant].splice(dragged.index, 1)[0];
+      data[target].unshift(task);
+      save();
+      render();
+    }
+    $(this).removeClass('drag-over');
+    dragged = null;
+  });
 
   $('.add').on('click', function () {
     var quadrant = $(this).closest('.quadrant');
