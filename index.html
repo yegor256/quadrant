@@ -2,10 +2,46 @@
 SPDX-FileCopyrightText: Copyright (c) 2025 Yegor Bugayenko
 SPDX-License-Identifier: MIT
 -->
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>/quadrant</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quadrant</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
+  <div class="container">
+    <div class="quadrant" data-id="0">
+      <div class="header header-urgent-important">
+        <span>Urgent &amp; Important</span>
+        <button class="add">+</button>
+      </div>
+      <div class="tasks"></div>
+    </div>
+    <div class="quadrant" data-id="1">
+      <div class="header header-not-urgent-important">
+        <span>Not Urgent &amp; Important</span>
+        <button class="add">+</button>
+      </div>
+      <div class="tasks"></div>
+    </div>
+    <div class="quadrant" data-id="2">
+      <div class="header header-urgent-not-important">
+        <span>Urgent &amp; Not Important</span>
+        <button class="add">+</button>
+      </div>
+      <div class="tasks"></div>
+    </div>
+    <div class="quadrant" data-id="3">
+      <div class="header header-not-urgent-not-important">
+        <span>Not Urgent &amp; Not Important</span>
+        <button class="add">+</button>
+      </div>
+      <div class="tasks"></div>
+    </div>
+  </div>
+  <script src="index.js"></script>
 </body>
 </html>
