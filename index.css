@@ -123,6 +123,15 @@ body {
 .task-btn:hover {
   background: #e5e7eb;
 }
+.task.on-hold {
+  opacity: 0.5;
+  background: #f3f4f6;
+  border-style: dashed;
+}
+.task.on-hold .task-text {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
 .task-input {
   width: 100%;
   padding: 10px 12px;

@@ -10,7 +10,15 @@ const NAMES = [
 ];
 
 $(function () {
-  var data = JSON.parse(localStorage.getItem('quadrant-tasks')) || [[], [], [], []];
+  var raw = JSON.parse(localStorage.getItem('quadrant-tasks')) || [[], [], [], []];
+  var data = raw.map(function (quadrant) {
+    return quadrant.map(function (item) {
+      if (typeof item === 'string') {
+        return { text: item, hold: false };
+      }
+      return item;
+    });
+  });
 
   function save() {
     localStorage.setItem('quadrant-tasks', JSON.stringify(data));
@@ -20,11 +28,16 @@ $(function () {
     $('.quadrant').each(function (index) {
       var list = $(this).find('.tasks');
       list.empty();
-      data[index].forEach(function (text, i) {
+      data[index].forEach(function (item, i) {
         var task = $('<div class="task" draggable="true"></div>');
+        if (item.hold) {
+          task.addClass('on-hold');
+        }
         task.data('quadrant', index).data('index', i);
-        task.append($('<span class="task-text"></span>').text(text));
+        task.append($('<span class="task-text"></span>').text(item.text));
         var actions = $('<div class="task-actions"></div>');
+        var symbol = item.hold ? '&#9654;' : '&#10074;&#10074;';
+        actions.append($('<button class="task-btn hold">' + symbol + '</button>').data('quadrant', index).data('index', i));
         actions.append($('<button class="task-btn delete">&#10005;</button>').data('quadrant', index).data('index', i));
         task.append(actions);
         list.append(task);
@@ -93,7 +106,7 @@ $(function () {
     input.focus();
     input.on('keydown', function (e) {
       if (e.key === 'Enter' && input.val().trim()) {
-        data[quadrant.data('id')].unshift(input.val().trim());
+        data[quadrant.data('id')].unshift({ text: input.val().trim(), hold: false });
         save();
         render();
       } else if (e.key === 'Escape') {
@@ -102,13 +115,21 @@ $(function () {
     });
     input.on('blur', function () {
       if (input.val().trim()) {
-        data[quadrant.data('id')].unshift(input.val().trim());
+        data[quadrant.data('id')].unshift({ text: input.val().trim(), hold: false });
         save();
         render();
       } else {
         input.remove();
       }
     });
+  });
+
+  $(document).on('click', '.hold', function () {
+    var q = $(this).data('quadrant');
+    var i = $(this).data('index');
+    data[q][i].hold = !data[q][i].hold;
+    save();
+    render();
   });
 
   $(document).on('click', '.delete', function () {
@@ -118,7 +139,6 @@ $(function () {
     save();
     render();
   });
-
 
   render();
 });
