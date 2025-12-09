@@ -25,16 +25,11 @@ $(function () {
         task.data('quadrant', index).data('index', i);
         task.append($('<span class="task-text"></span>').text(text));
         var actions = $('<div class="task-actions"></div>');
-        actions.append($('<button class="task-btn move">&#8644;</button>').data('quadrant', index).data('index', i));
         actions.append($('<button class="task-btn delete">&#10005;</button>').data('quadrant', index).data('index', i));
         task.append(actions);
         list.append(task);
       });
     });
-  }
-
-  function closeMenu() {
-    $('.menu').remove();
   }
 
   var dragged = null;
@@ -124,37 +119,6 @@ $(function () {
     render();
   });
 
-  $(document).on('click', '.move', function (e) {
-    e.stopPropagation();
-    closeMenu();
-    var btn = $(this);
-    var q = btn.data('quadrant');
-    var i = btn.data('index');
-    var menu = $('<div class="menu"></div>');
-    NAMES.forEach(function (name, target) {
-      if (target !== q) {
-        var option = $('<button></button>').text(name);
-        option.on('click', function () {
-          var task = data[q].splice(i, 1)[0];
-          data[target].unshift(task);
-          save();
-          render();
-          closeMenu();
-        });
-        menu.append(option);
-      }
-    });
-    var rect = btn[0].getBoundingClientRect();
-    menu.css({
-      top: rect.bottom + 4 + 'px',
-      left: Math.min(rect.left, window.innerWidth - 180) + 'px'
-    });
-    $('body').append(menu);
-  });
-
-  $(document).on('click', function () {
-    closeMenu();
-  });
 
   render();
 });

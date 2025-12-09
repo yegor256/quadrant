@@ -123,34 +123,6 @@ body {
 .task-btn:hover {
   background: #e5e7eb;
 }
-.menu {
-  position: absolute;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 100;
-  min-width: 160px;
-}
-.menu button {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 10px 14px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 13px;
-}
-.menu button:hover {
-  background: #f3f4f6;
-}
-.menu button:first-child {
-  border-radius: 6px 6px 0 0;
-}
-.menu button:last-child {
-  border-radius: 0 0 6px 6px;
-}
 .task-input {
   width: 100%;
   padding: 10px 12px;
