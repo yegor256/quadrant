@@ -1,8 +1,8 @@
 # Planning Quadrant
 
-Just open it in your browser, [click here][self].
+[Open it in your browser][self].
 
-No persistence here.
-If you clean browser cache, the data is lost.
+Data is stored in browser cache only.
+Clearing the cache deletes all data.
 
 [self]: https://yegor256.github.io/quadrant/
